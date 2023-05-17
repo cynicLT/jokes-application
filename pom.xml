@@ -47,6 +47,7 @@
         <archunit.version>1.0.1</archunit.version>
         <error.prone.version>2.10.0</error.prone.version>
         <instancio.version>2.15.0</instancio.version>
+        <wiremock.version>1.58</wiremock.version>
     </properties>
 
 
@@ -166,6 +167,11 @@
 
         <!--        Testing -->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
@@ -190,6 +196,24 @@
             <groupId>org.instancio</groupId>
             <artifactId>instancio-junit</artifactId>
             <version>${instancio.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-osgi</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>${wiremock.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -357,6 +381,7 @@
                     </excludedClasses>
                     <excludedTestClasses>
                         <param>org.cynic.jokes.architecture.**</param>
+                        <param>org.cynic.jokes.e2e.**</param>
                     </excludedTestClasses>
                 </configuration>
                 <executions>

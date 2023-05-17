@@ -1,0 +1,2 @@
+feign-client:
+  chuck-norris.url: http://localhost:38080
