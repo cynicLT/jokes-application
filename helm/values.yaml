@@ -1,0 +1,70 @@
+common:
+  environment: dev
+  namespace: api
+  name: jokes-application
+  domain: plumery.com
+  port:
+    name: http-port
+    value: 8080
+
+hpa:
+  behavior:
+    - name: scaleDown
+      type: Pods
+      value: 1
+      seconds:
+        period: 600
+    - name: scaleUp
+      type: Pods
+      value: 1
+      seconds:
+        period: 600
+  replicas:
+    min: 1
+    max: 2
+  resources:
+    - name: memory
+      value: 80
+    - name: cpu
+      value: 80
+
+deployment:
+  security:
+    fs: 10001
+    user: 10001
+    group: 10001
+  docker:
+    image:
+      name: jokes-application:latest
+      pullPolicy: Always
+  update:
+    max:
+      surge: 1
+      unavailable: 1
+  limit:
+    cpu: 600m
+    memory: 3Gi
+    storage: 5Gi
+  request:
+    cpu: 300m
+    memory: 1Gi
+    storage: 1Gi
+  probe:
+    port: http-port
+    path: /health/status
+    values:
+      - name: livenessProbe
+        failureThreshold: 5
+        seconds:
+          period: 600
+          initialDelay: 20
+          timeout: 120
+      - name: startupProbe
+        failureThreshold: 12
+        seconds:
+          period: 20
+          initialDelay: 20
+          timeout: 120
+
+service:
+  type: ClusterIP

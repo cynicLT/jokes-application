@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+
+    <!-- Deserialized only JSON -->
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-web@.*$</packageUrl>
+        <cve>CVE-2016-1000027</cve>
+    </suppress>
+
+    <!-- Not using UNWRAP feature-->
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
+        <cve>CVE-2022-42003</cve>
+        <cve>CVE-2022-42004</cve>
+    </suppress>
+
+    <!-- YAML files not part of user input -->
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml.*$</packageUrl>
+        <vulnerabilityName regex="true">.*</vulnerabilityName>
+    </suppress>
+
+    <!--NO XML parsing -->
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-core@.*$
+        </packageUrl>
+        <cve>CVE-2022-45688</cve>
+    </suppress>
+
+    <!--    SPEL not used in project-->
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-.*$</packageUrl>
+        <cve>CVE-2023-20861</cve>
+        <cve>CVE-2023-20860</cve>
+        <cve>CVE-2023-20863</cve>
+    </suppress>
+
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/spring\-boot.*$</packageUrl>
+        <cve>CVE-2023-20873</cve>
+    </suppress>
+
+    <!--  Jetty not using COOKIES -->
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty/jetty\-.*$</packageUrl>
+        <cve>CVE-2023-26048</cve>
+        <cve>CVE-2023-26049</cve>
+    </suppress>
+</suppressions>

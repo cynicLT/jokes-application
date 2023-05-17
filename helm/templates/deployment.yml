@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.common.name }}-deployment
+  labels:
+    app: {{ .Values.common.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.common.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{ .Values.deployment.update.max.surge }}
+      maxUnavailable: {{ .Values.deployment.update.max.unavailable }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.common.name }}
+    spec:
+      securityContext:
+        fsGroup: {{ .Values.deployment.security.fs}}
+        runAsNonRoot: true
+        runAsUser: {{ .Values.deployment.security.user}}
+        runAsGroup: {{ .Values.deployment.security.group}}
+      volumes:
+        - name: data
+          emptyDir:
+            { }
+      containers:
+        - name: {{ .Values.common.name }}
+          image: {{ .Values.deployment.docker.image.name}}
+          imagePullPolicy: {{ .Values.deployment.docker.image.pullPolicy}}
+          ports:
+            - containerPort: {{ .Values.common.port.value }}
+              name: {{ .Values.common.port.name }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.common.name }}
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/app/data
+          resources:
+            limits:
+              cpu: {{ .Values.deployment.limit.cpu}}
+              ephemeral-storage: {{ .Values.deployment.limit.storage}}
+              memory: {{ .Values.deployment.limit.memory}}
+            requests:
+              cpu: {{ .Values.deployment.request.cpu}}
+              ephemeral-storage: {{ .Values.deployment.request.storage}}
+              memory: {{ .Values.deployment.request.memory}}
+          {{- range $item := .Values.deployment.probe.values}}
+          {{ $item.name}}:
+            httpGet:
+              path: {{ $.Values.deployment.probe.path}}
+              port: {{ $.Values.deployment.probe.port}}
+            periodSeconds: {{ $item.seconds.period}}
+            initialDelaySeconds: {{ $item.seconds.initialDelay}}
+            timeoutSeconds: {{ $item.seconds.timeout}}
+            failureThreshold: {{ $item.failureThreshold}}
+          {{- end }}
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false

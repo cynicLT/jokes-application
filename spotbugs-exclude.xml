@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <Match>
+        <And>
+            <Or>
+                <Package name="~.*[.]domain[.]http[.]?.*"/>
+            </Or>
+            <Or>
+                <Bug pattern="EI_EXPOSE_REP"/>
+            </Or>
+        </And>
+    </Match>
+    <Match>
+        <Package name="~.*[.]client[.]?.*"/>
+    </Match>
+</FindBugsFilter>

@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.common.name }}-ingress
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ .Values.common.name }}.{{ .Values.common.namespace }}.{{ .Values.common.environment }}.{{ .Values.common.domain}}
+      secretName: {{ .Values.common.name }}-tls
+  rules:
+    - host: {{ .Values.common.name }}.{{ .Values.common.namespace }}.{{ .Values.common.environment }}.{{ .Values.common.domain}}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.common.name }}-service
+                port:
+                  name: {{ .Values.common.port.name}}

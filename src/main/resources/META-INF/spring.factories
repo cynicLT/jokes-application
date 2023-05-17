@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=org.cynic.jokes.framework.environment.SingleActiveProfileEnvironmentPostProcessor, org.cynic.jokes.framework.environment.SystemPropertiesEnvironmentPostProcessor
+org.springframework.context.ApplicationListener=org.cynic.jokes.framework.listener.PropertiesApplicationListener
