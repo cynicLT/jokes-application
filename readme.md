@@ -4,9 +4,36 @@
 
 This project is Jokes applicaiton for Plumery
 
-## Requirements
+## How to run
 
-Project using `Java 17` and `Maven 3`.
+To run project can be used one of following approaches:
+
+### Local build
+
+To build locally following requirements exist
+
+* `JVM 17`
+* `Maven 3`
+
+Build and run application by executing
+
+```shell
+mvn clean spring-boot:run -Dspring.profiles.active=local
+```
+
+### Skaffold build
+
+To build locally following requirements exist
+
+* `minikube`
+* `kubectl`
+* `skaffold`
+
+Run skaffold:
+
+```shell
+skaffold dev
+```
 
 ## Code quality
 

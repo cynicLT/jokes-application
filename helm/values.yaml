@@ -7,6 +7,8 @@ common:
     name: http-port
     value: 8080
 
+configs: [ ]
+
 hpa:
   behavior:
     - name: scaleDown
@@ -29,14 +31,10 @@ hpa:
       value: 80
 
 deployment:
-  security:
-    fs: 10001
-    user: 10001
-    group: 10001
   docker:
     image:
-      name: jokes-application:latest
-      pullPolicy: Always
+      name: jokes-application
+      pullPolicy: IfNotPresent
   update:
     max:
       surge: 1

@@ -1,0 +1,27 @@
+apiVersion: skaffold/v4beta5
+kind: Config
+metadata:
+  name: jokes-application
+build:
+  tagPolicy:
+    sha256: { }
+  artifacts:
+    - image: jokes-application
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:latest
+        env:
+          - "GOOGLE_RUNTIME_VERSION=17"
+deploy:
+  helm:
+    releases:
+      - name: jokes-application
+        chartPath: helm
+        valuesFiles:
+          - helm/values.yaml
+        setValues:
+          deployment:
+            docker.image.pullPolicy: Never
+          configs:
+            - name: spring_profiles_active
+              value: local
+        version: 0.0.1-local

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.common.name }}
+data:
+  {{- range $item := .Values.configs}}
+  {{ $item.name}}: {{ $item.value}}
+  {{- end }}
