@@ -20,7 +20,9 @@ deploy:
           - helm/values.yaml
         setValues:
           deployment:
-            docker.image.pullPolicy: Never
+            docker:
+              image:
+                name: jokes-application
           configs:
             - name: spring_profiles_active
               value: local

@@ -33,7 +33,6 @@ hpa:
 deployment:
   docker:
     image:
-      name: jokes-application
       pullPolicy: IfNotPresent
   update:
     max:
